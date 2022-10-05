@@ -37,7 +37,6 @@ class Witness:
 		domains = sorted(list(set(domains)))
 		return domains
 
-
 	def capture(self, input_file):
 		""" Screenshot all URLs of the given domain and write results to viewer.html
 		"""
@@ -45,16 +44,22 @@ class Witness:
 		self.make_browser()
 		self.urls = []
 		assert(len(domains) > 0), 'Error: file at path {} is empty, no domains loaded.'.format(input_file)
-		print("initializing...", end="\r")
+		# print("initializing...", end="\r")
+		num_domains = len(domains)
+		domain_ctr = 0
 		for domain in domains:
+			domain_ctr += 1
+			domain_prct = int(100.*float(domain_ctr)/float(num_domains))
+			print("scanning {} ({}/{}) [ {} %]".format(domain, domain_ctr, num_domains, domain_prct), end='\r')
 			self.urls = self.urls + scan.get_urls(domain, ports=self.common_ports)
+		print("")
 		exception_ctr = Counter()
 		num_urls = len(self.urls)
 		url_ctr = 0
 		for u in self.urls:
 			url_ctr += 1
-			url_prct = 100.*(float(url_ctr)/float(num_urls))
-			print("capturing {} ({}/{}) [{:.1f}%]".format(u, url_ctr, num_urls, url_prct), end='\r')
+			url_prct = int(100.*(float(url_ctr)/float(num_urls)))
+			print("capturing {} ({}/{}) [ {} %]".format(u, url_ctr, num_urls, url_prct), end='\r')
 			try:
 				self.screenshot_url(u)
 			except Exception as e:
@@ -94,7 +99,6 @@ class Witness:
 				continue
 			os.rename("./images/"+ifn, archive_path+"/images/"+ifn)
 
-	
 	def screenshot_url(self, url):
 		""" Take a screenshot of the URL.
 		"""
@@ -117,9 +121,7 @@ class Witness:
 		return screenshot_filename
 
 if __name__ == "__main__":
-	url = "https://www.python.org"
 	w = Witness()
-	# w.screenshot(url)
 	assert(len(sys.argv) == 2), "Error: please supply filepath with domain names as argument (e.g. python witness.py ./domains.txt)"
 	assert(os.path.exists(sys.argv[1])), "Error: supplied filepath {} does not exist.".format(sys.argv[1])
 	w.capture(sys.argv[1])
