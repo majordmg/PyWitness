@@ -16,13 +16,18 @@ Make sure you've got the Firefox geckodriver in your PATH variable.
 
 # How it works
 
-This script uses nmap to scan the domain input file for common web ports, then opens the domains with selenium and saves a screenshot. You will see a progress bar while the script works.
+This script uses nmap to scan the domain input file for common web ports, then opens the domains with selenium and saves a screenshot. You will see a progress bar while the script works:
+
+![progress](https://user-images.githubusercontent.com/15061132/193953721-248e5747-ad66-47f3-a527-dae2ba3562c6.PNG)
 
 After it's complete, it will open a final view of each domain (with port and protocol) and a thumbnail image in the selenium browser. 
 
 # Results 
 
-You will see the results in the headful browser that the script opens after completion, but the images and viewer will also be saved in a timestamped subfolder under "archives", so you can view them any time. 
+You will see the results in the headful browser that the script opens after completion, shown below, but the images and viewer will also be saved in a timestamped subfolder under "archives", so you can view them any time. 
+
+![results](https://user-images.githubusercontent.com/15061132/193953744-9290a8ec-c25d-45dc-994e-776df9c6dade.PNG)
+
 
 # The motivation
 
